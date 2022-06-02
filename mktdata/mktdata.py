@@ -14,6 +14,7 @@ class MarketData(object):
 
         # BINU TODO: Exchanges supprted should come from config file
         self.xchgs[Exchange.BINANCE.value] = self.mdfactory.createBinance()
+        self.xchgs[Exchange.FTX.value] = self.mdfactory.createFTX()
 
     def get_klines(
         self,
@@ -26,14 +27,14 @@ class MarketData(object):
         if exchange not in self.xchgs:
             raise "Unsupported Exchange %s" % exchange
 
-        return self.xchgs[exchange].get_hist_candles(symbol, 
+        return self.xchgs[exchange].get_historical_candles(symbol, 
                 start_time, end_time)
 
     def get_order_book(self, exchange: Exchange, symbol: Symbol):
         """
         Returns 20 best bids and 20 best asks
         """
-        return self.xchgs[exchange].get_order_book(symbol)
+        return self.xchgs[exchange].get_order_book(symbol, depth=5)
 
     # For testing only
     def hello(self):

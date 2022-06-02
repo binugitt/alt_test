@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+
+  mysql:
+    image: mysql:8.0.29
+    environment:
+        MYSQL_ROOT_PASSWORD: 'password'
+        MYSQL_DATABASE: 'TestDB'
+    ports:
+      - 3306:3306
+
+
   mktdata:
     build:
         context: ./
@@ -9,6 +19,9 @@ services:
     #command: python3 ./mktdata/mktdata.py
     ports:
       - 1234:1234
+    depends_on:
+      - mysql
+
 
   mysql_client:
     build:
@@ -19,4 +32,5 @@ services:
     network_mode: host
     depends_on:
       - mktdata
+      - mysql
 

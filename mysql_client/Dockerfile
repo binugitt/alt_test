@@ -3,6 +3,8 @@ FROM python:3.9
 #RUN pip install zerorpc==0.6.3
 RUN pip install pyzmq==22.3.0
 RUN pip install zerorpc
+RUN pip install mysql-connector-python
+
 
 #WORKDIR /usr/src/app
 

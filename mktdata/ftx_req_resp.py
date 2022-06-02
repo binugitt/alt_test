@@ -1,29 +1,27 @@
 import requests
 from datetime import datetime
 from collections import defaultdict
-import copy
 
 from symbol import Symbol
-from exchange import Exchange
 from md_interface import MDExchange
 
 
 
 # BINU TODO: We need a mechanism to be able to manage different websockets!
 
-class Binance(MDExchange):
+class FTX(MDExchange):
     def __init__(self):
 
         # Build security mapping. Ideally we should be having
         # a SecurityManager class and all configs should be read from config
         self.securties = dict()
-        self.securties[Symbol.BTCUSDT.value] = "BTCUSDT"
-        self.securties[Symbol.ETHUSDT.value] = "ETHUSDT"
-        self.securties[Symbol.SOLUSDT.value] = "SOLUSDT"
+        self.securties[Symbol.BTCUSDT.value] = "BTC/USD"
+        self.securties[Symbol.ETHUSDT.value] = "ETH/USD"
+        self.securties[Symbol.SOLUSDT.value] = "SOL/USD"
 
         # Using api as below.
-        # https://api.binance.com/api/v3/depth?limit=10&symbol=BTCUSDT
-        self.base_url = "https://api.binance.com/api/v1/"
+        #https://ftx.us/api/markets/BTC/USD/orderbook?depth=20
+        self.base_url = "https://ftx.us/api/markets/"
 
 
     def get_security(self, sym: Symbol):
@@ -33,36 +31,21 @@ class Binance(MDExchange):
         raise "Security not found: %s" % sym 
 
     def get_data(self, sym: Symbol, typ: str, params):
-        url = self.base_url + typ
+        url = self.base_url + self.get_security(sym) + "/" + typ
 
-        params['symbol'] = self.get_security(sym)
         print(url)
         print(params)
 
         data = requests.get(url, params=params).json()
-        #print(data)
+        print(data)
 
         return data
 
-    #def format_order_book(
     def get_order_book(self, sym: Symbol, depth: int):
         params = {
-                    "limit" : depth,
+                    "depth" : depth,
                  }
-        binance_ob = self.get_data(sym, "depth", params)
-        print("binance_ob=%s" % type(binance_ob))
-        print("binance_ob = %s" % binance_ob)
-        #normalised_ob = MDExchange.OrderBookData(
-        normalised_ob = {}
-        normalised_ob['timestamp']  = datetime.now().strftime("%d-%m-%Y, %H:%M:%S")
-        normalised_ob['symbol']     = Symbol(sym).name
-        normalised_ob['ecn']        = Exchange.BINANCE.name
-        normalised_ob['ecn_symbol'] = self.get_security(sym)
-        normalised_ob['bids']       = copy.deepcopy(binance_ob['bids'])
-        normalised_ob['asks']       = copy.deepcopy(binance_ob['asks'])
-        print("normalised_ob = %s" % normalised_ob)
-
-        return normalised_ob
+        return self.get_data(sym, "orderbook", params)
 
     def get_historical_candles(
         self,
