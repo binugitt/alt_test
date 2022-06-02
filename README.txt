@@ -48,11 +48,7 @@ Run:
     docker compose up
 
 
-Current State:
-    Embarassing - Not much progress has been made - just able to create the docker compose
-    application which currently only contains the mkt data(not fully implemented either)
-    and mysql part which is only a zerorpc client and dows not even have mysql
-
+Confession:
     The whole thing was a new concept for me starting from docker! Even python I have
     not used to the level as the main application(used it only as side application).
     This is causing me to take more time.
