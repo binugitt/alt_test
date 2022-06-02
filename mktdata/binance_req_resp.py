@@ -36,8 +36,8 @@ class Binance(MDExchange):
         url = self.base_url + typ
 
         params['symbol'] = self.get_security(sym)
-        print(url)
-        print(params)
+        #print(url)
+        #print(params)
 
         data = requests.get(url, params=params).json()
         #print(data)
@@ -50,8 +50,9 @@ class Binance(MDExchange):
                     "limit" : depth,
                  }
         binance_ob = self.get_data(sym, "depth", params)
-        print("binance_ob=%s" % type(binance_ob))
-        print("binance_ob = %s" % binance_ob)
+        #print("binance_ob=%s" % type(binance_ob))
+        #print("binance_ob = %s" % binance_ob)
+
         #normalised_ob = MDExchange.OrderBookData(
         normalised_ob = {}
         normalised_ob['timestamp']  = datetime.now().strftime("%d-%m-%Y, %H:%M:%S")
@@ -60,7 +61,7 @@ class Binance(MDExchange):
         normalised_ob['ecn_symbol'] = self.get_security(sym)
         normalised_ob['bids']       = copy.deepcopy(binance_ob['bids'])
         normalised_ob['asks']       = copy.deepcopy(binance_ob['asks'])
-        print("normalised_ob = %s" % normalised_ob)
+        #print("normalised_ob = %s" % normalised_ob)
 
         return normalised_ob
 

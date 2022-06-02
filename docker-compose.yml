@@ -9,6 +9,7 @@ services:
         MYSQL_DATABASE: 'TestDB'
     ports:
       - 3306:3306
+    network_mode: host
 
 
   mktdata:
@@ -19,6 +20,7 @@ services:
     #command: python3 ./mktdata/mktdata.py
     ports:
       - 1234:1234
+    network_mode: host
     depends_on:
       - mysql
 
@@ -33,4 +35,14 @@ services:
     depends_on:
       - mktdata
       - mysql
+
+  grafana:
+    image: grafana/grafana:8.2.6
+    ports:
+      - 3000:3000
+    network_mode: host
+    depends_on:
+      - mktdata
+      - mysql
+      - mysql_client
 

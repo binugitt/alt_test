@@ -139,7 +139,7 @@ def main():
 
         # Poll mkt data every sec for 5 mins and write to DB
         cnt = 1
-        while cnt <= 30:
+        while cnt <= 300:
             md_writer.md_pull_n_write()
             time.sleep(1)
             cnt = cnt + 1
