@@ -37,7 +37,12 @@ services:
       - mysql
 
   grafana:
-    image: grafana/grafana:8.2.6
+    #image: grafana/grafana:8.2.6
+    image: grafana/grafana:8.5.4-ubuntu
+    environment:
+        GF_PATHS_DATA: '/var/lib/grafana'
+    #volumes:
+        #- ./grafana:/var/lib/grafana
     ports:
       - 3000:3000
     network_mode: host

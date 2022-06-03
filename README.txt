@@ -32,12 +32,12 @@ DB: MySQL
         | symbol     | varchar(50) | YES  |     | NULL    |       |
         | ecn        | varchar(20) | YES  |     | NULL    |       |
         | ecn_symbol | varchar(50) | YES  |     | NULL    |       |
-        | side       | varchar(2)  | YES  |     | NULL    |       |
         | level      | int         | YES  |     | NULL    |       |
-        | price      | double      | YES  |     | NULL    |       |
-        | qty        | double      | YES  |     | NULL    |       |
+        | bid_price  | double      | YES  |     | NULL    |       |
+        | bid_qty    | double      | YES  |     | NULL    |       |
+        | ask_price  | double      | YES  |     | NULL    |       |
+        | ask_qty    | double      | YES  |     | NULL    |       |
         +------------+-------------+------+-----+---------+-------+
-
 
 Build:
     From root folder(altonomy_test):
