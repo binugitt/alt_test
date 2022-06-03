@@ -39,6 +39,17 @@ DB: MySQL
         | ask_qty    | double      | YES  |     | NULL    |       |
         +------------+-------------+------+-----+---------+-------+
 
+    Grafana dashboard query:
+        SELECT
+          time AS "time",
+          (bid_price + ask_price)/2
+        FROM OrderBook
+        WHERE
+          level = 1
+          and ecn = "BINANCE"
+          and symbol = "BTCUSDT"
+        ORDER BY time
+
 Build:
     From root folder(altonomy_test):
     docker compose build
