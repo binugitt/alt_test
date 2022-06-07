@@ -4,6 +4,8 @@ from datetime import datetime
 import time
 import zerorpc
 
+# NOTE: To make this run directly(without docker) just copy the files
+# from common folder into mkdata folder
 
 def test_direct():
     #xchg = Binance()

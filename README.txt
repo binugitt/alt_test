@@ -19,7 +19,18 @@ Design:
     Mysql client will connect to MktData and pull data for 5 mins and write to DB.
     It waits for mkt data service to be up prior to doing so. Once connected,
     it will create OrderBook table if not already there and write to that.
+    Have created a grafana dashboard for (bid+ask)/2 plot - the data is fetched from mysql
+    Have created candlesticks plot using
+        1) mplfinance(file:jupyter/notebooks/plot_candles_using_mplfinance.ipynb)
+        2) plotly(file:jupyter/notebooks/plot_candles_using_plotly.ipynb)
 
+    Both Orderbook and Historical candles are implemented for both Binance and FTX.
+    FTX did not work with "requests" package and had to use curl directly
+
+    TODO:
+    1) The pre-init of sql server with tables pre-created. This did not work due to 
+       permission issues.
+    2) Tidy up of the entire code base
 
 DB: MySQL
     DB: TestDB
@@ -62,4 +73,4 @@ Run:
 Confession:
     The whole thing was a new concept for me starting from docker! Even python I have
     not used to the level as the main application(used it only as side application).
-    This is causing me to take more time.
+    This is caused me to take more time.
