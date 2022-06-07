@@ -1,4 +1,4 @@
-version: "3"
+version: "3.0"
 
 services:
 
@@ -46,6 +46,28 @@ services:
     ports:
       - 3000:3000
     network_mode: host
+    depends_on:
+      - mktdata
+      - mysql
+      - mysql_client
+
+  jupyter:
+    build:
+        context: ./
+        dockerfile: ./jupyter/Dockerfile
+    #image: bitnami/jupyter-base-notebook:2.3.0
+    environment:
+        NB_USER: 'binu'
+        CHOWN_HOME: 'yes'
+        CHOWN_EXTRA_OPTS: '-R'
+        #JUPYTER_TOKEN: 'letmein'
+    ports:
+      - 8888:8888
+    hostname: localhost
+    network_mode: host
+    volumes:
+        - ./jupyter/notebooks:/home/binu
+    #-p 8888:8888 --hostname localhost -e NB_USER=binu -e CHOWN_HOME=yes -e CHOWN_EXTRA_OPTS='-R' --user root -w /home/binu/ -v $PWD/work:/home/binu  jup_img
     depends_on:
       - mktdata
       - mysql
