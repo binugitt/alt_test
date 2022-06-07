@@ -16,12 +16,14 @@ class MarketData(object):
         self.xchgs[Exchange.BINANCE.value] = self.mdfactory.createBinance()
         self.xchgs[Exchange.FTX.value] = self.mdfactory.createFTX()
 
-    def get_klines(
+    def get_historical_candles(
         self,
         exchange: Exchange,
         symbol: Symbol,
-        start_time: datetime,
-        end_time: datetime
+        start_time: int,
+        end_time: int
+        #start_time: datetime,
+        #end_time: datetime
         ):
 
         if exchange not in self.xchgs:
@@ -34,6 +36,10 @@ class MarketData(object):
         """
         Returns 20 best bids and 20 best asks
         """
+
+        if exchange not in self.xchgs:
+            raise "Unsupported Exchange %s" % exchange
+
         return self.xchgs[exchange].get_order_book(symbol, depth=5)
 
     # For testing only

@@ -9,8 +9,8 @@ class MDExchange:
     def get_historical_candles(
         self,
         symbol: Symbol,
-        start_time: datetime,
-        end_time: datetime
+        start_time: int,
+        end_time: int
         ):
         raise Exception("Not Implemented")
     
