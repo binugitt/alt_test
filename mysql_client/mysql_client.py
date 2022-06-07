@@ -138,6 +138,25 @@ class MktDataDBWriter:
         print(mycursor.rowcount, "record inserted.")
         '''
 
+    # Pull historical candles for testing
+    def cdls_pull(self):
+        try:
+            # Test
+            #print(self.md_client.hello())
+
+            #print("normalised_ob=%s" % type(normalised_ob))
+            #print("normalised_ob['bids']=%s" % type(normalised_ob['bids']))
+            #print(normalised_ob)
+
+            normalised_ob = self.md_client.get_order_book(Exchange.BINANCE.value, Symbol.BTCUSDT.value)
+            hist_cdls = self.md_client.get_historical_candles(Exchange.BINANCE.value, Symbol.BTCUSDT.value,
+                    #datetime.fromisoformat('2022-05-01'), datetime.fromisoformat('2022-05-08'))
+                    int(round(datetime.timestamp(datetime.fromisoformat('2022-05-01'))*1000)), 
+                    int(round(datetime.timestamp(datetime.fromisoformat('2022-05-08'))*1000)))
+            print(hist_cdls)
+        except Exception as e:
+            print("An error occurred: %s" % e)
+
 def main():
     try:
         # Wait for a while till mysql server is up
@@ -154,6 +173,9 @@ def main():
             md_writer.md_pull_n_write()
             time.sleep(1)
             cnt = cnt + 1
+
+        # Test candles
+        #md_writer.cdls_pull()
 
     except Exception as e:
         print("An error occurred: %s" % e)
